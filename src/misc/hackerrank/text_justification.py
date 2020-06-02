@@ -28,54 +28,9 @@ def text_justification(words, l):
     for word in words:
         # See if adding num of chars to char count would make it be longer than l
         if len(word) + char_count > l:
-            # Time to add line to lines_arr, but first need to format it.
-
-            # Format current_line into a justified string.
-            # Find out how many spaces are needed
-            chars_in_current_line = 0
-            for current_word in current_line:
-                chars_in_current_line += len(current_word)
-            # print(chars_in_current_line)
-            num_spaces_needed = l - chars_in_current_line
-            # print(num_spaces_needed)
-
-            # Find out how many space places are needed (len(current_line) -1)
-            space_places = len(current_line) - 1
-            if space_places:
-                # Figure out how many spaces are needed in each space_place
-                num_for_each_place = num_spaces_needed//space_places
-                # See if those divide evenly.
-                remainder = num_for_each_place % space_places
-            else:
-                # No spaces needed in this case.
-                num_for_each_place = 0
-
-            # Convert the arr to a string
-            current_string = ''
-            for i in range(len(current_line)-1):
-                '''
-                if remainder:
-                    # If remainder, add num_for_each_place and extra space until extras are gone.
-                    current_string += (current_line[i] +
-                                       (' ' * num_for_each_place)) + ' '
-                    remainder -= 1
-                else:
-                    # If no remainder, add num_for_each_place spaces between the words.
-                    current_string += (current_line[i] +
-                                       (' ' * num_for_each_place))
-                '''
-                current_string += (current_line[i] +
-                                   (' ' * num_for_each_place))
-                if remainder:
-                    current_string += ' '
-                    remainder -= 1
-
-            current_string += current_line[-1]
-
-            # Append current_line to lines_arr.
-            lines_arr.append(current_string)
+            # Time to format line and then add to lines_arr.
+            lines_arr.append(formatLine(current_line, l))
             # Reset current_line and char_count.
-            current_string = ''
             current_line = []
             char_count = 0
 
@@ -84,9 +39,8 @@ def text_justification(words, l):
 
         # Increase char count.
         char_count += len(word)
-        # If char count < l (el), add a space to current line
+        # If char count < l (that's not a one), increase char_count to add a space to current line
         if char_count < l:
-            # Increase the char_count to include the space
             char_count += 1
 
     if lines_arr[-1] != current_line:
@@ -106,6 +60,40 @@ def text_justification(words, l):
 
     print(lines_arr)
     return(lines_arr)
+
+
+def formatLine(current_line, l):
+    # Format current_line into a justified string.
+    # Find out how many spaces are needed
+    chars_in_current_line = 0
+    for current_word in current_line:
+        chars_in_current_line += len(current_word)
+    # print(chars_in_current_line)
+    num_spaces_needed = l - chars_in_current_line
+    # print(num_spaces_needed)
+
+    # Find out how many space places are needed (len(current_line) -1)
+    space_places = len(current_line) - 1
+    if space_places:
+        # Figure out how many spaces are needed in each space_place
+        num_for_each_place = num_spaces_needed//space_places
+        # See if those divide evenly.
+        remainder = num_for_each_place % space_places
+    else:
+        # No spaces needed in this case.
+        num_for_each_place = 0
+
+    # Convert the arr to a string
+    current_string = ''
+    for i in range(len(current_line)-1):
+        current_string += (current_line[i] +
+                           (' ' * num_for_each_place))
+        if remainder:
+            current_string += ' '
+            remainder -= 1
+
+    current_string += current_line[-1]
+    return current_string
 
 
 text_justification(["This", "is", "an", "example",
