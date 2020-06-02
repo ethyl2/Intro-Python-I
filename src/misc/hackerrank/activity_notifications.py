@@ -46,12 +46,13 @@ def activityNotifications(expenditure, d):
     #   Compare median to 2 * that day's expenditure
     #   If >= then increment counter.
     for i in range(d, len(expenditure)):
-        # print("i is: " + str(i))
-        # print(expenditure[i-3:i])
+        print("i is: " + str(i))
+        print(expenditure[i-3:i])
         current_median = statistics.median(expenditure[i-3:i])
         # Or to use my function:
         # current_median = find_median(expenditure[i-3:i])
-        # print("median: " + str(current_median))
+        print("median: " + str(current_median) + ' * 2 = ' +
+              str(current_median * 2) + " versus " + str(expenditure[i]))
         # print("day_amount: ", str(expenditure[i]))
         if (current_median * 2) <= expenditure[i]:
             num_notifications += 1
@@ -60,12 +61,14 @@ def activityNotifications(expenditure, d):
 
 
 # print(find_median([10, 20, 30]))
-activityNotifications([10, 20, 30, 40, 50], 3)  # 1
-activityNotifications([1, 2, 3, 4, 4], 4)  # 0
-activityNotifications([2, 3, 4, 2, 3, 6, 8, 4, 5], 5)  # 2
-
-
+# activityNotifications([10, 20, 30, 40, 50], 3)  # 1
+# activityNotifications([1, 2, 3, 4, 4], 4)  # 0
+# activityNotifications([2, 3, 4, 2, 3, 6, 8, 4, 5], 5)  # 2
+activityNotifications([0, 82, 180, 55, 168, 41, 179, 59,
+                       139, 71, 6, 12, 135, 139, 73, 157, 4, 74, 195], 14)
+'''
 with open(os.path.join(sys.path[0], 'large_case.txt'), 'r') as f:
     nums = f.read().split(" ")
 
-activityNotifications(nums, 10000)
+activityNotifications(nums, 10000)  # 633
+'''
