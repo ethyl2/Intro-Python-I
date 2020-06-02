@@ -27,7 +27,10 @@ class Player:
         if a.score < b.score:
             return 1
         if a.score == b.score:
-            return 0
+            if a.name < b.name:
+                return -1
+            else:
+                return 1
 
 
 n = int(input())
