@@ -64,3 +64,15 @@ class Author:
 
 b = Book('a book', 2020, 'Heather', 'Nuffer')
 print(b.author)
+
+'''
+# Similar to JS's op1 === op2 to check that the types are the same as well as the values:
+isinstance(op1, type(op2)) and isinstance(op2, type(op1)) and op1 == op2
+'''
+
+test = [2, 5, 'tester']
+print(2 in test)
+print('test' in test)
+
+test2 = [2, 2, 5]
+print(set(test2))
