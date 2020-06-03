@@ -34,20 +34,56 @@ return False b/c 2 1s in 2nd col.
 
 
 def sudoku2(grid):
-    # First, check rows.
+    # First, check rows by making a lookup set during each row iteration.
+    # Also, check the col arrays for duplicates, too.
     # Make a lookup dict.
     # If value of lookup dict is already 1, return False
-
+    col_sets = {}
     for i in range(len(grid)):
-        lookup = {}
+        row_set = set()
+
         for j in range(len(grid[i])):
-            if grid[i][j] in lookup and grid[i][j] != '.':
+            val = grid[i][j]
+            # Check the row
+            if val in row_set and val != '.':
                 return False
             else:
-                lookup[grid[i][j]] = 1
+                row_set.add(val)
+                # Now, check the current column
+                if j not in col_sets:
+                    col_sets[j] = set(val)
+                else:
+                    if val in col_sets[j] and val != '.':
+                        return False
+                    else:
+                        col_sets[j].add(val)
+    print(col_sets)
+    subgrid_check = check_subgrids(grid)
+    if not subgrid_check:
+        return False
     return True
-    # Next, check cols
+
     # Finally, check subgrids
+
+
+def check_subgrids(grid):
+    subgrid_starts = [[0, 0], [3, 0], [6, 0],  # y,x
+                      [0, 3], [3, 3], [6, 3],
+                      [0, 6], [3, 6], [6, 6]]
+    # Loop through subgrids
+    for i in range(len(subgrid_starts)):
+        subgrid_start = subgrid_starts[i]
+        print(grid[subgrid_start[1]][subgrid_start[0]])
+        subgrid_set = set()
+        for j in range(3):
+            for k in range(3):
+                val = grid[subgrid_start[1] + j][subgrid_start[0] + k]
+                if val in subgrid_set and val != '.':
+                    # print("found duplicate")
+                    return False
+                else:
+                    subgrid_set.add(val)
+    return True
 
 
 grid1 = [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
@@ -60,4 +96,28 @@ grid1 = [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
          ['.', '.', '.', '.', '.', '7', '.', '.', '.'],
          ['.', '.', '.', '5', '.', '.', '.', '7', '.']]
 
-print(sudoku2(grid1))
+# print(sudoku2(grid1))
+
+grid3 = [['.', '.', '.', '1', '4', '.', '.', '2', '.'],
+         ['.', '.', '6', '.', '.', '.', '.', '.', '.'],
+         ['.', '.', '.', '.', '.', '.', '.', '.', '.'],
+         ['.', '.', '1', '.', '.', '.', '.', '.', '.'],
+         ['.', '6', '7', '.', '.', '.', '.', '.', '9'],
+         ['.', '.', '.', '.', '.', '.', '8', '1', '.'],
+         ['.', '3', '.', '.', '.', '.', '.', '7', '6'],
+         ['.', '.', '.', '.', '.', '7', '.', '.', '.'],
+         ['.', '.', '.', '5', '.', '.', '.', '.', '7']]
+# check_subgrids(grid3)
+print(sudoku2(grid3))
+
+grid2 = [['.', '.', '.', '.', '2', '.', '.', '9', '.'],
+         ['.', '.', '.', '.', '6', '.', '.', '.', '.'],
+         ['7', '1', '.', '.', '7', '5', '.', '.', '.'],
+         ['.', '7', '.', '.', '.', '.', '.', '.', '.'],
+         ['.', '.', '.', '.', '8', '3', '.', '.', '.'],
+         ['.', '.', '8', '.', '.', '7', '.', '6', '.'],
+         ['.', '.', '.', '.', '.', '2', '.', '.', '.'],
+         ['.', '1', '.', '2', '.', '.', '.', '.', '.'],
+         ['.', '2', '.', '.', '3', '.', '.', '.', '.']]
+
+# print(sudoku2(grid2))
