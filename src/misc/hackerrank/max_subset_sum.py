@@ -83,7 +83,7 @@ def maxSubsetSum_faster2(arr):
 
     two_away = arr[0]
     one_away = max(arr[0], arr[1])
-    winner = 0
+    # winner = 0
 
     for i in range(2, length):
         # Progressively look to see which is the largest,
