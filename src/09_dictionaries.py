@@ -60,3 +60,11 @@ pprint(waypoints)
 for waypoint in waypoints:
     for value in waypoint.values():
         print(value)
+
+
+# Another way:
+for w in waypoints:
+    print(w['name'], w['lat'], w['lon'])
+
+# Another way, but it also prints the keys in addition to the values
+[print(point) for point in waypoints]
