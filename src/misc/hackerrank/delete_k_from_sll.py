@@ -30,12 +30,37 @@ def remove_from_list(l, k):
 
     # Loop through until the curr.next is k or there is no curr.next
     curr = l
-    while curr.next and curr.next.value != k:
-        curr = curr.next
 
-    # If curr.next's value is k, skip over curr.next by reassigning curr.next pointer
-    if curr.next and curr.next.value == k:
-        curr.next = curr.next.next
+    prev = None
+
+    while curr.next:
+        # print("Current: " + str(curr.value))
+        # If we land on a k, unattach it by reassigning its prev's next to be its next
+        if curr.value == k:
+            prev.next = curr.next
+            curr = curr.next
+        # If the next value is a k, and there is still enough nodes for curr.next.next,
+        # assign the curr's next to be its next.next to skip the next node (which contains k).
+        elif curr.next.value == k and curr.next.next:
+            prev = curr
+            curr.next = curr.next.next
+            curr = curr.next
+            print(curr.value)
+        # If the next node's value is k, but there aren't enough nodes to get the next.next,
+        # the next node must be the tail. Set the curr's next to be none to deattach the tail.
+        elif curr.next.value == k:
+            curr.next = None
+            curr = None
+            # print("tail has value k")
+            return l
+        # Otherwise, continue along the sll
+        else:
+            prev = curr
+            curr = curr.next
+    # Last check to see if the tail's value is k. If so, detach it from the prev node.
+    # This is important when a jump using next.next lands us on the tail.
+    if curr.value == k:
+        prev.next = None
     return l
 
 
