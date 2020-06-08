@@ -35,3 +35,29 @@ def queue_time(customers, n):
 print(queue_time([5, 3, 4], 1))  # < - 12
 print(queue_time([10, 2, 3, 3], 2))  # < - 10
 print(queue_time([2, 3, 10], 2))  # < - 12
+
+# Donald Whitely's version with recursion:
+
+
+def queue_time_recursive(customers, n, tills=None):
+    if len(customers) == 0:
+        if tills is not None:
+            current_max = max(tills.keys(), key=(lambda k: tills[k]))
+            return tills[current_max]
+        return 0
+    if tills is None:
+        tills = {}
+    if len(tills) == 0:
+        if n > 1:
+            for i in range(n):
+                tills[i] = 0
+        else:
+            tills[0] = 0
+    current_key = min(tills.keys(), key=(lambda k: tills[k]))
+    tills[current_key] += customers[0]
+    return queue_time_recursive(customers[1:], n, tills)
+
+
+print(queue_time_recursive([5, 3, 4], 1))  # < - 12
+print(queue_time_recursive([10, 2, 3, 3], 2))  # < - 10
+print(queue_time_recursive([2, 3, 10], 2))  # < - 12
