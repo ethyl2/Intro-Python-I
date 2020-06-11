@@ -50,10 +50,13 @@ def reverse_sublist(head, p, q):
 def reverse_sublist_in_place(head, p, q):
     curr = head
     index = 1
+    # Tranverse the sll until the index before p
     while curr and index < p - 1:
         curr = curr.next
         index += 1
+    # Use the helper function to reverse the sublist
     (sub_head, sub_tail, next_node) = reverse(curr.next, q-p)
+    # Connect the sublist up to the rest of the list
     curr.next = sub_head
     sub_tail.next = next_node
     return head
@@ -69,11 +72,12 @@ def reverse(head, num_places):
         prev = curr
         curr = next_node
         index += 1
+    # Return the new head, new tail, and the node_node
     return(prev, head, curr)
-
 
 # ---------------------------
 # Testing it out
+
 
 def ll_to_list(head):
     output_list = []
