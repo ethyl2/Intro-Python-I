@@ -24,6 +24,10 @@ class Node:
 
 
 def reverse_sublist(head, p, q):
+    # edge case
+    if p == q:
+        return head
+
     curr = head
     index = 1
     stack = []
@@ -48,6 +52,10 @@ def reverse_sublist(head, p, q):
 
 
 def reverse_sublist_in_place(head, p, q):
+    # edge case
+    if p == q:
+        return head
+
     curr = head
     index = 1
     # Tranverse the sll until the index before p
@@ -60,6 +68,8 @@ def reverse_sublist_in_place(head, p, q):
     curr.next = sub_head
     sub_tail.next = next_node
     return head
+
+# Helper function
 
 
 def reverse(head, num_places):
@@ -110,3 +120,5 @@ node4.next = node5
 print_before_and_after_reverse_sublist(node1, 2, 4, reverse_sublist)
 print('\n')
 print_before_and_after_reverse_sublist(node1, 2, 4, reverse_sublist_in_place)
+print('\n')
+print_before_and_after_reverse_sublist(node1, 4, 4, reverse_sublist_in_place)
