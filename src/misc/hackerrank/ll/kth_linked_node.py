@@ -57,4 +57,18 @@ node1 = ListNode(1)
 node2 = ListNode(2)
 node3 = ListNode(3)
 node1.next = node2
+node2.next = node3
 print(removeKthLinkedListNode(node1, 2).value)
+
+
+def print_ll(head):
+    ll_list = []
+    curr = head
+    while curr is not None:
+        ll_list.append(curr.value)
+        curr = curr.next
+    print(ll_list)
+    return ll_list
+
+
+print_ll(node1)
