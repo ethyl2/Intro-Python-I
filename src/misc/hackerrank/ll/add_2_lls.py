@@ -92,12 +92,6 @@ while curr:
     curr = curr.next
 print(return_value)
 
-
-def add_2_lls(l1, l2):
-    # Initialize carry to be 0 to start with.
-    return add_2_lls_inner(l1, l2, 0)
-
-
 '''
 Note: Kapil used an outer and inner function for his version:
 def add_2_lls(l1, l2):
@@ -108,3 +102,70 @@ def add_2_lls(l1, l2):
 def add_2_lls_inner(l1, l2, carry):
     etc.
 '''
+
+"""
+For part 2 of the challenge, what if the order of the nodes is reversed from how they are ordered in the first
+code challenge? So 5 -> 7 -> 9 represents the integer 579
+Return the nodes reversed as well
+"""
+
+# Helper function to be used to get the slls back to the order expected in the above function.
+
+
+def reverse_ll(head):
+    if head == None or head.next == None:
+        return head
+    prev = None
+    curr = head
+    while curr is not None:
+        # print(curr.data)
+        next_node = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next_node
+    return prev
+
+# Main function to use when the input nodes are reversed
+
+
+def add_2_lls_that_are_reversed(l1, l2, carry=0):
+    if l1 == None:
+        return l2
+    if l2 == None:
+        return l1
+    print_ll(l1)
+    l1 = reverse_ll(l1)
+
+    print_ll(l2)
+    l2 = reverse_ll(l2)
+
+    result = reverse_ll(add_2_lls(l1, l2))
+    print_ll(result)
+    return result
+
+# Helps me to visualize a sll
+
+
+def print_ll(head):
+    ll_list = []
+    curr = head
+    while curr is not None:
+        ll_list.append(curr.data)
+        curr = curr.next
+    print(ll_list)
+    return ll_list
+
+# To visualize whether the reverse_ll() was correctly written
+
+
+def print_before_and_after_reverse_ll(head):
+    print_ll(head)
+    new_head = reverse_ll(head)
+    print_ll(new_head)
+
+
+# print_before_and_after_reverse_ll(node1)
+
+
+# 579 + 76 = 655
+print(add_2_lls_that_are_reversed(node1, node4).data)
