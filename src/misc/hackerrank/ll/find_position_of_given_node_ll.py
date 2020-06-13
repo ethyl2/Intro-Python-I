@@ -14,6 +14,7 @@ class Node:
 
 
 def find_index(head, node):
+    # Edge cases
     if head == None or node == None:
         return -1
     if head == node:
@@ -22,12 +23,16 @@ def find_index(head, node):
     position = 0
     curr = head
 
+    # Iterate thru sll until node is found or reach tail
     while curr is not None and curr != node:
         curr = curr.next
         position += 1
 
+    # If node is not found
     if curr == None:
         return -1
+
+    # If node is found
     return position
 
 
