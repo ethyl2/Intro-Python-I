@@ -69,7 +69,7 @@ def find_double_elements2(my_list):
         else:
             pointer += 1
 
-    print(my_list[:-1])
+    # print(my_list[:-1])
     return(my_list[:-1])
 
 # Another posibility, but not optimal. Space is O(n).
