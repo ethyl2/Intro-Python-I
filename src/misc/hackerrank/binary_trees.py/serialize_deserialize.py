@@ -3,7 +3,7 @@ From Kapil Sharma's lecture 16 Jun 2020
 "Serialize and deserialize a binary tree"
 
 More info:
-    Note: it's not a binary search tree, just a binary tree.
+    Note: It's not a binary search tree, just a binary tree.
     In this example, we will store the tree as a string <- serializing it.
     And then convert it back to a tree <- deserializing it.
     We need to pick a delimiter/separator that makes sense, considering what type of data is stored.
@@ -21,6 +21,7 @@ We will use Pre-Order to store and later to remake the tree:
      /\   /
     7  9  3 
 """
+from collections import deque
 
 
 class TreeNode:
@@ -52,10 +53,32 @@ def serialize(node):
 
         # Visit right
         serialize_inner(node.right)
+
     serialize_inner(node)
     return output_string
 
 
+def deserialize(serialized_tree):
+    q = deque()
+    for item in serialized_tree.split(','):
+        q.append(item)
+    print(q)
+    return deserialize_inner(q)
+
+
+def deserialize_inner(tree_queue):
+    value = tree_queue.popleft()
+    if value == "#" or value == "":
+        return None
+    node = TreeNode(value)
+    node.left = deserialize_inner(tree_queue)
+    node.right = deserialize_inner(tree_queue)
+    return node
+
+
+# Testing
+
+# Creating the binary tree
 root = TreeNode(5)
 node34 = TreeNode(34)
 node6 = TreeNode(6)
@@ -70,4 +93,13 @@ node34.right = node9
 node3 = TreeNode(3)
 node6.left = node3
 
-print(serialize(root))  # Should print out 5,34,7,#,#,9,#,#,6,3,#,#,#,
+# Now testing the functions
+
+serialized_binary_tree = serialize(root)
+print(serialized_binary_tree)  # Should print out 5,34,7,#,#,9,#,#,6,3,#,#,#,
+
+binary_tree = deserialize(serialized_binary_tree)
+print(binary_tree.data)  # Should print out 5
+
+reserialized_binary_tree = serialize(binary_tree)
+print(reserialized_binary_tree)  # Should print out 5,34,7,#,#,9,#,#,6,3,#,#,#,
