@@ -1,5 +1,6 @@
 """
-Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+Merge two sorted linked lists and return it as a new list. 
+The new list should be made by splicing together the nodes of the first two lists.
 
 Example:
 
@@ -8,7 +9,6 @@ Output: 1->1->2->3->4->4
 
 from leetcode
 """
-# Definition for singly-linked list.
 
 
 class ListNode:
@@ -31,42 +31,39 @@ class Solution:
         if l1 == None and l2 == None:
             return None
 
-        node_from_l1 = l1
-        node_from_l2 = l2
-
         # Set the head of the new ll
-        if node_from_l1.val <= node_from_l2.val:
-            new_node = ListNode(node_from_l1.val)
-            node_from_l1 = node_from_l1.next
+        if l1.val <= l2.val:
+            new_node = ListNode(l1.val)
+            l1 = l1.next
         else:
-            new_node = ListNode(node_from_l2.val)
-            node_from_l2 = node_from_l2.next
+            new_node = ListNode(l2.val)
+            l2 = l2.next
 
         head = new_node
 
         # Go through the ll's to determine what should be linked next
-        while node_from_l2 and node_from_l1:
-            if node_from_l1.val <= node_from_l2.val:
-                newest_node = ListNode(node_from_l1.val)
-                node_from_l1 = node_from_l1.next
+        while l2 and l1:
+            if l1.val <= l2.val:
+                newest_node = ListNode(l1.val)
+                l1 = l1.next
             else:
-                newest_node = ListNode(node_from_l2.val)
-                node_from_l2 = node_from_l2.next
+                newest_node = ListNode(l2.val)
+                l2 = l2.next
             new_node.next = newest_node
             new_node = newest_node
 
         # Now that only 1 ll is left to go through, go ahead and add all of its nodes
-        while node_from_l1:
-            newest_node = ListNode(node_from_l1.val)
+        while l1:
+            newest_node = ListNode(l1.val)
             new_node.next = newest_node
             new_node = newest_node
-            node_from_l1 = node_from_l1.next
+            l1 = l1.next
 
-        while node_from_l2:
-            newest_node = ListNode(node_from_l2.val)
+        while l2:
+            newest_node = ListNode(l2.val)
             new_node.next = newest_node
             new_node = newest_node
-            node_from_l2 = node_from_l2.next
+            l2 = l2.next
 
         # print(head.val)
         return head
