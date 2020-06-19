@@ -66,6 +66,44 @@ class Solution:
         # print(head.val)
         return head
 
+    # Another approach that Beej suggested as a possibility. O(n log n) time, so time complexity isn't optimal.
+    def mergeTwoLists2(self, l1: ListNode, l2: ListNode) -> ListNode:
+        # Edge cases
+        if l1 == None and l2 != None:
+            return l2
+        if l2 == None and l1 != None:
+            return l1
+        if l1 == None and l2 == None:
+            return None
+
+        # Stick all values of both slls into a list
+        big_list = []
+        curr = l1
+        while curr:
+            big_list.append(curr.val)
+            curr = curr.next
+        curr = l2
+        while curr:
+            big_list.append(curr.val)
+            curr = curr.next
+        # print(big_list)
+
+        # Sort the list
+        big_list.sort()
+        # Turn the list into a sll
+        new_head = ListNode(big_list[0])
+        prev = new_head
+        curr = ListNode(big_list[1])
+        for i in range(2, len(big_list)):
+            prev.next = curr
+            prev = curr
+            curr = ListNode(big_list[i])
+        prev.next = curr
+
+        return new_head
+
+        # Return the head
+
 
 tail1 = ListNode(4, None)
 node2 = ListNode(2, tail1)
@@ -76,8 +114,8 @@ node5 = ListNode(3, tail2)
 head2 = ListNode(1, node5)
 
 s = Solution()
-current_node = s.mergeTwoLists(head1, head2)
-
+# current_node = s.mergeTwoLists(head1, head2)
+current_node = s.mergeTwoLists2(head1, head2)
 while current_node:
     print(current_node.val)
     current_node = current_node.next
