@@ -80,29 +80,7 @@ def is_palindrome2(node):
         slow = slow.next
     return True
 
-
-'''
- def isPalindrome(self, head: ListNode) -> bool:
-        fast = slow = head
-        # find mid, make slow reference mid.
-        while fast and fast.next:
-            fast = fast.next.next
-            slow = slow.next
-        # reverse slow list
-        node = None
-        while slow:
-            nxt = slow.next
-            slow.next = node
-            node = slow
-            slow = nxt
-        # check if original list is equal to reversed list
-        while node:
-            if head.val != node.val:
-                return False
-            node = node.next
-            head = head.next
-        return True
-'''
+# This version below, from Joshua Hill, uses O(1) space. O(n) time.
 
 
 def is_palindrome3(head: Node) -> bool:
