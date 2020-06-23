@@ -48,7 +48,8 @@ def are_values_equal(original, reversed):
         reversed = reversed.next
     return True
 
-# Second version. Time O(n). Space O(n/2) simplifies to O(n).
+# Second version. Time O(n). At least, only 1 traversal this time.
+# Space O(n/2) simplifies to O(n).
 # This version uses a stack.
 # We traverse thru the sll, adding data values to the stack.
 # Once we get past the middle, we pop a value off the stack and compare it to the current data value.
@@ -79,6 +80,53 @@ def is_palindrome2(node):
         slow = slow.next
     return True
 
+
+'''
+ def isPalindrome(self, head: ListNode) -> bool:
+        fast = slow = head
+        # find mid, make slow reference mid.
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        # reverse slow list
+        node = None
+        while slow:
+            nxt = slow.next
+            slow.next = node
+            node = slow
+            slow = nxt
+        # check if original list is equal to reversed list
+        while node:
+            if head.val != node.val:
+                return False
+            node = node.next
+            head = head.next
+        return True
+'''
+
+
+def is_palindrome3(head: Node) -> bool:
+    fast = slow = head
+    # find mid, make slow reference mid.
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+    # reverse the rest of the list, from slow to the end
+    node = None
+    while slow:
+        nxt = slow.next
+        slow.next = node
+        node = slow
+        slow = nxt
+
+    # check if original list is equal to reversed list
+    while node:
+        if head.data != node.data:
+            return False
+        node = node.next
+        head = head.next
+    return True
+
 #  Testing
 
 
@@ -93,8 +141,9 @@ node2.next = node3
 node3.next = node4
 node4.next = node5
 
-print(is_palindrome(node1))
-print(is_palindrome2(node1))
+# print(is_palindrome(node1))
+# print(is_palindrome2(node1))
+print(is_palindrome3(node1))
 
 # 1 -> 3 -> 5 -> 3 -> 1 odd, palindrome
 node01 = Node(1)
@@ -107,8 +156,9 @@ node02.next = node03
 node03.next = node04
 node04.next = node05
 
-print(is_palindrome(node01))
-print(is_palindrome2(node01))
+# print(is_palindrome(node01))
+# print(is_palindrome2(node01))
+print(is_palindrome3(node01))
 
 # 1 -> 3 -> 3 -> 4 # even, not a palindrome
 node0001 = Node(1)
@@ -118,8 +168,9 @@ node0004 = Node(4)
 node0001.next = node0002
 node0002.next = node0003
 node0003.next = node0004
-print(is_palindrome(node0001))
-print(is_palindrome2(node0001))
+# print(is_palindrome(node0001))
+# print(is_palindrome2(node0001))
+print(is_palindrome3(node0001))
 
 # 1 -> 3 -> 3 -> 1 # even, palindrome
 node001 = Node(1)
@@ -129,5 +180,6 @@ node004 = Node(1)
 node001.next = node002
 node002.next = node003
 node003.next = node004
-print(is_palindrome(node001))
-print(is_palindrome2(node001))
+# print(is_palindrome(node001))
+# print(is_palindrome2(node001))
+print(is_palindrome3(node001))
