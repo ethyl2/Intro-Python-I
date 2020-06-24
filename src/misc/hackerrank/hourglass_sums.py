@@ -25,12 +25,6 @@ Return the max value of those.
 # Add that sum to hourglass_sums array
 # Return the max value
 
-import math
-import os
-import random
-import re
-import sys
-
 
 def hourglassSum(arr):
     # hourglass_count = 0 # If you want to make sure you are getting all of the hourglasses
@@ -64,13 +58,45 @@ def hourglassSum(arr):
     # print(hourglass_sums)
     return(max(hourglass_sums))
 
+# Refactoring it with a max_winner var instead of holding all of the sums in a list, and
+# using a helper function to sum up the hourglass nums.
+# O(n^2) time complexity -- If not given that the matrix is always 6x6. And if the matrix is always a square.
+# O(n*m) if not always a square.
+# O(1) space
 
-print(hourglassSum([[-9, -9, -9,  1, 1, 1],
-                    [0, -9,  0,  4, 3, 2],
-                    [-9, -9, -9,  1, 2, 3],
-                    [0,  0,  8,  6, 6, 0],
-                    [0,  0,  0, -2, 0, 0],
-                    [0,  0,  1,  2, 4, 0]]))
+
+def hourglassSum2(arr):
+    max_winner = calculate_hourglass_sum(arr, 0, 0)
+    for i in range(1, 4):
+        for j in range(0, 4):
+            total = calculate_hourglass_sum(arr, i, j)
+            max_winner = max(max_winner, total)
+    return max_winner
+
+
+def calculate_hourglass_sum(arr, i, j):
+    # Top row
+    hourglass_sum = arr[i][j]
+    hourglass_sum += arr[i][j+1]
+    hourglass_sum += arr[i][j+2]
+
+    # Middle
+    hourglass_sum += arr[i+1][j+1]
+
+    # Bottom
+    hourglass_sum += arr[i+2][j]
+    hourglass_sum += arr[i+2][j+1]
+    hourglass_sum += arr[i+2][j+2]
+    return hourglass_sum
+
+
+# 28
+print(hourglassSum2([[-9, -9, -9,  1, 1, 1],
+                     [0, -9,  0,  4, 3, 2],
+                     [-9, -9, -9,  1, 2, 3],
+                     [0,  0,  8,  6, 6, 0],
+                     [0,  0,  0, -2, 0, 0],
+                     [0,  0,  1,  2, 4, 0]]))
 
 '''
 hourglassSum([[0, 1, 2, 3, 4, 5],
