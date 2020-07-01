@@ -10,6 +10,8 @@ find_uniq([ 0, 0, 0.55, 0, 0 ]) == 0.55
 
 """
 
+# First approach. Time O(2n) -> O(n) Space O(n)
+
 
 def find_uniq(arr):
     lookup = dict()
@@ -21,6 +23,8 @@ def find_uniq(arr):
     for entry in lookup.items():
         if entry[1] == 1:
             return entry[0]
+
+# 2nd approach. Time O(n) Space O(n)
 
 
 def find_uniq2(arr):
