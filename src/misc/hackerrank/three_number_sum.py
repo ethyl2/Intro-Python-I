@@ -18,10 +18,12 @@ Example:
 [12, 3, 1, 2, -6, 5, -8, 6], 0
 Return [[-8,2,6], [-8, 3, 5], [-6,1,5]]
 """
+# My Initial Plan:
 # Generate all triplets
 # Check to see if their sum is target
 # If so, add to output_arr
 # Sort output arr
+
 from itertools import combinations
 
 # Here is my first approach. O(n^3) time. O(n^3) space, too, most likely.
@@ -112,7 +114,7 @@ def threeNumberSum(arr, target):
     return my_triplets
 
 
-# Test:
+# Tests:
 
 print(threeNumberSum_initial([12, 3, 1, 2, -6, 5, -8, 6], 0))
 print(threeNumberSum_second([12, 3, 1, 2, -6, 5, -8, 6], 0))
