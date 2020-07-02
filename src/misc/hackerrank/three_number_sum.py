@@ -18,11 +18,60 @@ Example:
 [12, 3, 1, 2, -6, 5, -8, 6], 0
 Return [[-8,2,6], [-8, 3, 5], [-6,1,5]]
 """
+# My Initial Plan:
 # Generate all triplets
 # Check to see if their sum is target
 # If so, add to output_arr
 # Sort output arr
+
 from itertools import combinations
+
+# Here is my first approach. O(n^3) time. O(n^3) space, too, most likely.
+
+
+def threeNumberSum_initial(arr, target):
+    # Generate triplets:
+    triplets = []
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            for k in range(j+1, len(arr)):
+                # print("i, j, k: " + str(arr[i]) +
+                #      " " + str(arr[j]) + " " + str(arr[k]))
+                triplets.append([arr[i], arr[j], arr[k]])
+
+    # Now, find winning triplets -- the ones that sum up to the target:
+    winners = []
+    for triplet in triplets:
+        total = triplet[0] + triplet[1] + triplet[2]
+        if total == target:
+            # print('Found one!')
+            triplet.sort()
+            winners.append(triplet)
+    winners.sort()
+    return winners
+
+# This second approach uses combinations from itertools, in case it is faster.
+# Probably still time O(n^3), though probably more optimized under the hood.
+
+
+def threeNumberSum_second(arr, target):
+    # First, generate triplets.
+    combos = combinations(arr, 3)
+    triplets = [list(combo) for combo in combos]
+
+    # Now, find winning triplets -- the ones that sum up to the target:
+    winners = []
+    for triplet in triplets:
+        total = triplet[0] + triplet[1] + triplet[2]
+        if total == target:
+            # print('Found one!')
+            triplet.sort()
+            winners.append(triplet)
+    winners.sort()
+    return winners
+
+# Here is my submitted solution, which makes doubles instead of triplets initially.
+# So the time complexity would be probably around O(n^2)
 
 
 def threeNumberSum(arr, target):
@@ -31,7 +80,12 @@ def threeNumberSum(arr, target):
     doubles = [combo for combo in double_combos]
     # print(doubles)
 
-    # Generate lookup table to store what is needed to reach target for each double:
+    # Generate lookup table to figure out later what is needed to reach target with each double.
+
+    # An entry in lookup might look like this: 10: [(2,8), (3,7), (1,9)]
+    # The sum is the key.
+    # The value is an array of the doubles that sum up to the key.
+
     lookup = {}
     for double in doubles:
         # print(double[0] + double[1])
@@ -43,8 +97,10 @@ def threeNumberSum(arr, target):
 
     # print(lookup)
 
-    # Loop thru arr to see if the target - num exists in the dictionary. If so, make a triplet with each of the values
-    # for that number with num.
+    # Loop thru arr to see if the key of target - num exists in the dictionary. num is the current number.
+    # If so, make a triplet with each of the values for that key with num
+    #   if num != either of the numbers in a value's double
+    #   (to eliminate duplicated numbers -- we can't use the same number in the array twice or more in one triplet.)
     my_triplets = []
     for num in arr:
         if (target - num) in lookup:
@@ -55,51 +111,13 @@ def threeNumberSum(arr, target):
                     if triplet not in my_triplets:
                         my_triplets.append(triplet)
     my_triplets.sort()
-    print(my_triplets)
-
-    # Generate triplets:
-    '''
-    triplets = []
-    for i in range(len(arr)):
-        for j in range(i+1, len(arr)):
-            for k in range(j+1, len(arr)):
-                # print("i, j, k: " + str(arr[i]) +
-                #      " " + str(arr[j]) + " " + str(arr[k]))
-                triplets.append([arr[i], arr[j], arr[k]])
-    # print(triplets)
-    print("triplets length: " + str(len(triplets)))
-    '''
-    '''
-    # Tryint out combinations():
-    #print(str(combinations(arr, 3)))
-    # print(help(combinations))
-    combos = combinations(arr, 3)
-    combos_arr = [list(i) for i in combos]
-    # print([list(i) for i in combos])
-    print("Combos length: " + str(len(combos_arr)))
-    
-    '''
-    # This way uses combinations:
-    combos = combinations(arr, 3)
-    triplets = [list(combo) for combo in combos]
-
-    # Find winning triplets
-    totals = []
-    winners = []
-    for triplet in triplets:
-        total = triplet[0] + triplet[1] + triplet[2]
-        totals.append(total)
-        if total == target:
-            print("Found one!")
-            # Sort triplet
-            triplet.sort()
-            winners.append(triplet)
-    # print(totals)
-    print(winners)
-
-    # sort winners
-    winners.sort()
-    print(winners)
+    return my_triplets
 
 
-threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0)
+# Tests:
+
+print(threeNumberSum_initial([12, 3, 1, 2, -6, 5, -8, 6], 0))
+print(threeNumberSum_second([12, 3, 1, 2, -6, 5, -8, 6], 0))
+print(threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0))
+
+# All should return [[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]]
