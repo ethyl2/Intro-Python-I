@@ -113,11 +113,45 @@ def threeNumberSum(arr, target):
     my_triplets.sort()
     return my_triplets
 
+# This version tries out an idea from the interviewer, in which the arr is sorted first,
+# so my return array doesn't need to be sorted later.
+# The sort() is still needed to sort the numbers inside the triplets, though,
+#   to eliminate duplicate triplets and to ensure that the numbers inside the triplet are sorted.
+
+# My way (sorting later), might be faster, because the length of the winning triplets array might very well be less
+# than the length of the arr.
+
+
+def threeNumberSum_sort_first(arr, target):
+    arr.sort()
+    double_combos = combinations(arr, 2)
+    doubles = [combo for combo in double_combos]
+
+    lookup = {}
+    for double in doubles:
+
+        if (double[0] + double[1]) not in lookup:
+            lookup[double[0] + double[1]] = [double]
+        else:
+            lookup[double[0] + double[1]].append(double)
+
+    my_triplets = []
+    for num in arr:
+        if (target - num) in lookup:
+            for double in lookup[target - num]:
+                if num != double[0] and num != double[1]:
+                    triplet = [num, double[0], double[1]]
+                    triplet.sort()  # Still needed to eliminate duplicate triplets and to return the numbers sorted
+                    if triplet not in my_triplets:
+                        my_triplets.append(triplet)
+
+    return my_triplets
+
 
 # Tests:
 
 print(threeNumberSum_initial([12, 3, 1, 2, -6, 5, -8, 6], 0))
 print(threeNumberSum_second([12, 3, 1, 2, -6, 5, -8, 6], 0))
 print(threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0))
-
+print(threeNumberSum_sort_first([12, 3, 1, 2, -6, 5, -8, 6], 0))
 # All should return [[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]]
