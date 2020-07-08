@@ -9,7 +9,7 @@ Run through the UPER problem solving framework while going through your thought 
 """
 
 
-def sum_inners(arr):
+def sum_min_inners(arr):
     return sum([min(inner) for inner in arr])
     '''
     total = 0
@@ -19,8 +19,8 @@ def sum_inners(arr):
     '''
 
 
-print(sum_inners([[8, 4], [90, -1, 3], [9, 62],
-                  [-7, -1, -56, -6], [201], [76, 18]]))
+print(sum__min_inners([[8, 4], [90, -1, 3], [9, 62],
+                       [-7, -1, -56, -6], [201], [76, 18]]))
 
 """
 Stretch:
