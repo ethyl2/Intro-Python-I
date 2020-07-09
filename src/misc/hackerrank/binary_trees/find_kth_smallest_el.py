@@ -16,7 +16,8 @@ This would work as long as there are no duplicates.
     In order to work with duplicates, add this line of code at the top of the function:
         arr = list(set(arr))
     
-Time complexity: O(n log n) for timsort + O(1) for access == O(n log n)
+Time complexity: O(n log n) for timsort + O(1) for access == O(n log n). 
+Of course, if the given array was already sorted, it would be O(1) b/c skip the sorting step and just grab the value.
 Space complexity: O(1)
 """
 
@@ -47,6 +48,12 @@ Again, this works as long as there are no duplicates.
     In order to work with duplicates, add this line of code at the top of the function:
         arr = list(set(arr))
 
+Time complexity: O(n) to create the min heap, I think. (https://www.geeksforgeeks.org/time-complexity-of-building-a-heap/)
+But it is only O(1) if you don't take the min heap creation into consideration,
+and only consider the rest.
+It would involve k operations, which is a constant.
+
+Space complexity is O(n) to build the min_heap. O(1) for the rest.
 '''
 
 
