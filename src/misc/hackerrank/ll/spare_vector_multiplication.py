@@ -15,6 +15,9 @@ Kapil suggests using an arraylist with Java or linked list with other languages.
 4. Else, if v1's index is smaller, move to next el for v1.
 5. Else, move to next el of v2.
 6. Finally, return total.
+
+Time complexity:  O(n+m), where n is the length of v1 and m is the length of v2
+Space complexity: O(n+m), taking the data structure conversions into account. O(1) otherwise.
 """
 A = [1, 0, 0, 0, 0, 0, 0, 0, 0, 4, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7]
 B = [0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 0, 0,
@@ -102,3 +105,31 @@ print(print_ll(v2))
 print(sparse_vector_multiplication(v1, v2))
 print(convert_ll_to_vector(v1))
 print(convert_ll_to_vector(v2))
+
+'''
+Experimenting using a dictionary instead.
+
+Similar time complexity : O(n+m), where n is the length of v1 and m is the length of v2, but 
+less traversals overall, when taking the data structure conversions into account, so a little
+more efficient. Unlike the first approach, only A has to be converted.
+
+Space complexity: O(n), where n is the length of v1. Again, more efficient when data structure conversions
+are taken into account.
+'''
+
+
+def sparse_vector_multiplication_with_dictionary(A, B):
+    dict_a = dict()
+    total = 0
+    for i in range(len(A)):
+        if A[i] != 0:
+            dict_a[i] = A[i]
+
+    for i in range(len(B)):
+        if B[i] != 0:
+            if A[i]:
+                total += B[i] * A[i]
+    return total
+
+
+print(sparse_vector_multiplication_with_dictionary(A, B))
