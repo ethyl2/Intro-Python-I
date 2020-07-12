@@ -11,6 +11,9 @@ Return boolean to should whether s matches p, with the matching covering the ent
 """
 
 
+import sys
+
+
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
         cache = {}
@@ -33,7 +36,7 @@ class Solution:
                         # Use pointers to move along s and p while current p isalpha or ?
                         sp, pp = 0, 0
 
-                        while sp < len(s) and pp < len(p) and (s[sp] == p[pp] or p[pp]='?'):
+                        while sp < len(s) and pp < len(p) and (s[sp] == p[pp] or p[pp] == '?'):
                             sp += 1
                             pp += 1
 
@@ -54,3 +57,11 @@ print(solution.isMatch('cb', '?a'))  # False
 print(solution.isMatch('aa', '*'))  # True
 print(solution.isMatch('adceb', 'a*b'))  # True
 print(solution.isMatch('acdcb', 'a*c?b'))  # False
+
+'''
+# You can check the recursion limit with sys.getrecursionlimit:
+print(sys.getrecursionlimit())
+# and change the recursion limit with sys.setrecursionlimit:
+sys.setrecursionlimit(1500)
+print(sys.getrecursionlimit())
+'''
