@@ -68,10 +68,20 @@ class Geocache(Waypoint):
         elif (self.size == 4):
             size_string = 'x-large'
 
-        return f'{self.name} {score} Size: {size_string} Location: [{self.lat},{self.lon}]'
+        return f'{self.name} {score} Size: {size_string}. Location: [{self.lat},{self.lon}]'
 
     def print_geocache_details(self):
         print(f'{self.name}: Difficulty: {self.difficulty}, Size: {self.size}, Location: {self.lat}, {self.lon}')
+
+
+class VisitedGeocache(Geocache):
+    def __init__(self, lat, lon, name, difficulty, size, date_visited):
+        super().__init__(lat, lon, name, difficulty, size)
+        self.date_visited = date_visited
+
+    def __str__(self):
+        parent_str = super().__str__()
+        return f'{parent_str} was visited on {self.date_visited}.'
 
 
 arches_np = Geocache(38.637291, -109.600533,
@@ -95,7 +105,9 @@ print(catacombs)
 newberry_views = Geocache(44.052137, -121.41556, "Newberry Views", 1.5, 2)
 newberry_views.print_geocache_details()
 
-
+newberry_views_visited = VisitedGeocache(
+    44.052137, -121.41556, "Newberry Views", 1.5, 2, 'June 30, 2020')
+print(newberry_views_visited)
 # Print it--also make this print more nicely
 # print(geocache)
 print(newberry_views)
